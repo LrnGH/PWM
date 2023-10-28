@@ -12,3 +12,20 @@ services:
     ports:
       - 8003:8001
     env_file: ./whatbot/.env
+    depends_on:
+      - db
+
+  db:
+    image: postgres
+    container_name: "database"
+    environment:
+      POSTGRES_USER: controlio
+      POSTGRES_PASSWORD: devpassword
+      POSTGRES_DB: db-ctrlio
+    volumes:
+      - db_data:/var/lib/postgresql/data/
+    ports:
+      - '5437:5432'
+volumes:
+  db_data:
+  
