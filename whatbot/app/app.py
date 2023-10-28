@@ -1,18 +1,22 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
+from models import Usuario
+
 app = FastAPI()
 usuarios= []
-# Modelo usuarios 
-class Usuario(BaseModel):
-      Nombre : str 
-      Numero: int 
+
+#TODO: documentar los endpoints de tal manera que se vean en swagger 
+# Aprender los verbos HTTP (GET, POST, PUT, DELETE)
+# Pasar toda el app a ingles
+
 @app.get('/')
 def root():
     return {"welcome": "Hello, world"}
+
 @app.get('/usuarios')
-def mostrar_usuarios():
-    return usuarios 
+def get_users():
+    return {"usuarios": usuarios}  
+
 @app.post('/usuarios')
-def registro (Datos : Usuario):
+def post_user (Datos : Usuario):
     usuarios.append(dict(Datos))
-    return "Recivido"
+    return {"mensaje":"Recibido"}
