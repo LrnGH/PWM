@@ -4,3 +4,4 @@
 # El schema de la base de datos esta en el documento pero si quieres añade mas tablas
 # util usar una interfaz gráfica para la base de datos como pgAdmin
 # usar el ORM de FASTAPI
+

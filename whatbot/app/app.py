@@ -1,8 +1,8 @@
 from fastapi import FastAPI
-from models import Usuario
+from models import user
 
 app = FastAPI()
-usuarios= []
+users= []
 
 #TODO: documentar los endpoints de tal manera que se vean en swagger 
 # Aprender los verbos HTTP (GET, POST, PUT, DELETE)
@@ -12,11 +12,11 @@ usuarios= []
 def root():
     return {"welcome": "Hello, world"}
 
-@app.get('/usuarios')
+@app.get('/users')
 def get_users():
-    return {"usuarios": usuarios}  
+    return {"users": users}  
 
-@app.post('/usuarios')
-def post_user (Datos : Usuario):
-    usuarios.append(dict(Datos))
-    return {"mensaje":"Recibido"}
+@app.post('/users')
+def post_user (data : user):
+    users.append(dict(data))
+    return {"message":" The user has been created"}
