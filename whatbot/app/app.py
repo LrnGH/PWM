@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from whatbot.app.schemas import user
+from schemas import user
 
 app = FastAPI()
 users= []
