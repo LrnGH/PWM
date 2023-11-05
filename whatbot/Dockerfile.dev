@@ -3,6 +3,6 @@ COPY ./requirements.txt /requirements.txt
 RUN pip install -r requirements.txt
 
 FROM base AS app 
-COPY ./app /app
-WORKDIR /app
+WORKDIR /usr/src/whatbot 
+COPY . /
 EXPOSE 8001

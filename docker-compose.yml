@@ -6,7 +6,7 @@ services:
     build:
       context: ./whatbot
       dockerfile: Dockerfile.dev
-    entrypoint: [ "uvicorn", "app:app", "--port", "8001", "--host", "0.0.0.0", "--reload"]
+    entrypoint: [ "uvicorn", "app.main:app", "--port", "8001", "--host", "0.0.0.0", "--reload"]
     volumes:
       - .:/usr/src/whatbot
     ports:
