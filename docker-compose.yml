@@ -1,43 +1,34 @@
-version: "3"
+version: '3.8'
 
 services:
-  whatbot:
-    container_name: "whatbot"
-    build:
-      context: ./whatbot
-      dockerfile: Dockerfile.dev
-    entrypoint: [ "uvicorn", "app:app", "--port", "8001", "--host", "0.0.0.0", "--reload"]
-    volumes:
-      - .:/usr/src/whatbot
-    ports:
-      - 8003:8001
-    env_file: ./whatbot/.env
-    depends_on:
-      - db
-
   db:
+    container_name: postgresql_db
     image: postgres
-    container_name: "database"
-    environment:
-      POSTGRES_USER: controlio
-      POSTGRES_PASSWORD: devpassword
-      POSTGRES_DB: db-ctrlio
-    volumes:
-      - db_data:/var/lib/postgresql/data/
+    restart: always
     ports:
-      - "5437:5432" 
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
 
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4
     environment:
-       PGADMIN_DEFAULT_EMAIL: admin@admin.com
-       PGADMIN_DEFAULT_PASSWORD: admin 
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
     ports:
       - 5050:80
     depends_on:
       - db
-
-volumes:
-  db_data:
-  
+  whatbot:
+    container_name: whatbot
+    build: .
+    command: bash -c "alembic upgrade head && uvicorn app:app --host 0.0.0.0 --port 8000 --reload"
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000 
+    depends_on:
+      - db
