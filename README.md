@@ -1,9 +1,10 @@
 # PWM
 
-## This project has 2 containers
+## This project has 3 containers
 
 - An python app
 - An postgres database
+- An pgadmin container
 
 
 ## Instructions 
@@ -12,6 +13,8 @@
 # For running locally the application using docker compose:
 
 docker compose up --build
+
+before to work in the app (whatbot) open pgadmin and register a server with the postgres credentials defined in the env file.  
 ```
 
 ## Git best practices 

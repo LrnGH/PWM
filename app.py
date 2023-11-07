@@ -23,7 +23,7 @@ def root():
 
 
 # Add a new user in the dabase 
-@app.post('/add_user/', response_model=schemamodel) 
+@app.post('/add_user/', response_model=schemamodel, description="Add a new user in the dabase") 
 def add_user (New_user: schemamodel):
     db_user =  modeluser(name =New_user.name, number=New_user.number)
     db.session.add(db_user)
@@ -32,14 +32,14 @@ def add_user (New_user: schemamodel):
     return db_user
 
 # show all the users in the database 
-@app.get('/users')
+@app.get('/users', description="show all the users in the database")
 def get_users():
     Users=db.session.query(modeluser).all()
     return Users 
 
 
 # Search for a user by name
-@app.get('/get_user')
+@app.get('/get_user', description="Search for a user by name")
 def get_user(name: str):  
     record= db.session.query(modeluser).filter(modeluser.name==name).first()
     if record is None: 
@@ -48,7 +48,7 @@ def get_user(name: str):
         return record 
    
 # Update user 
-@app.put("/update_user/{name}")
+@app.put("/update_user/{name}", description="Update user: allow change the name and/or number")
 def update_user(New_info:update):
     db_user= db.session.query(modeluser).filter(modeluser.name==New_info.user_name).first()
     if db_user is None:
@@ -64,7 +64,7 @@ def update_user(New_info:update):
         
 
 #Delete user 
-@app.delete('/delete/{name}')
+@app.delete('/delete/{name}', description="Delete user by name")
 def delete_user(name:str):
     db_user= db.session.query(modeluser).filter(modeluser.name==name).first()
     if db_user is None:
