@@ -3,8 +3,9 @@ from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 import os
 from schemas import User as schemamodel 
-from schemas import update
+from schemas import update, message
 from models import Users_table as modeluser 
+from models import Message_table
 from fastapi_sqlalchemy import db 
 from fastapi_sqlalchemy import DBSessionMiddleware
 
@@ -74,3 +75,11 @@ def delete_user(name:str):
         db.session.commit()
         return {"Success":"The user was deleted"}
     
+#Add Message 
+@app.post('/add_message/', description="Add a new message in the dabase") 
+def add_message (New_message: message):
+    db_message =  Message_table( Message=New_message.Message)
+    db.session.add(db_message)
+    db.session.commit()
+    db.session.refresh(db_message)
+    return {"answer":"The message has been created"}

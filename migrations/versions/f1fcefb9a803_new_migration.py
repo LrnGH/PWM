@@ -24,7 +24,13 @@ def upgrade():
          sa.Column('name', sa.String, nullable=False),
          sa.Column('number', sa.String, nullable=False)
     )
+     
+    op.create_table('Messages',
+         sa.Column( 'id', sa.Integer, primary_key=True, autoincrement=True),
+         sa.Column('Message', sa.String, nullable=False),
+    )
     
 
 def downgrade():
     op.drop_table('Users')
+    op.drop_table('Messages')

@@ -14,4 +14,7 @@ class Users_table(Base):
         self.name = name
         self.number = number
 
-    
+class Message_table(Base):
+    __tablename__= "Messages"
+    id= Column(Integer, primary_key=True, autoincrement=True)
+    Message=Column(String, nullable= False)
