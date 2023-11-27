@@ -10,10 +10,11 @@ from models import Message_table
 from fastapi_sqlalchemy import db 
 from fastapi_sqlalchemy import DBSessionMiddleware
 from whatsapp import get_text_message_input, send_message
+from prompt import create_message
+
 
 
 load_dotenv(".env")
-
 
 app= FastAPI(debug=True)
 
@@ -78,8 +79,13 @@ def delete_user(name:str):
         return {"Success":"The user was deleted"}
 
 #send a message 
-@app.post("/send-message/")
-async def send_message_route(recipient: str, message: str):
+@app.post("/send_message/")
+async def send_message_route(recipient: str, prompt: str):
+    message=create_message(prompt)
     data = get_text_message_input(recipient, message)
     result = await send_message(json.dumps(data))
-    return {"message": "Message sent successfully", "response": result}
+    return {"message": f"The next message has been send:{message} ", "response": result}
+
+ 
+
+

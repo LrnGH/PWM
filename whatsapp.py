@@ -38,3 +38,4 @@ def get_text_message_input(recipient, text):
             "body": text
         }
     }
+    
